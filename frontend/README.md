@@ -63,7 +63,12 @@ A modern, responsive news aggregation and summarization platform built with Reac
    bun install
    ```
 
-3. **Start the development server**
+3. **Create environment file (optional)**
+   ```bash
+   cp env.example .env
+   ```
+
+4. **Start the development server**
    ```bash
    npm run dev
    # or
@@ -118,7 +123,18 @@ src/
 ## 🔧 Configuration
 
 ### Environment Variables
-The application connects to a backend API. Make sure your backend is running on `http://localhost:3001` or update the API base URL in `src/lib/api.ts`.
+The application uses environment variables for configuration. Create a `.env` file in the frontend directory:
+
+```env
+# API Configuration
+VITE_API_BASE_URL=http://localhost:3001
+
+# Feature Flags
+VITE_ENABLE_ANALYTICS=false
+VITE_DEBUG_MODE=false
+```
+
+The API base URL is automatically configured with fallback to `http://localhost:3001` if not specified.
 
 ### API Endpoints
 The frontend expects the following API endpoints from the backend:

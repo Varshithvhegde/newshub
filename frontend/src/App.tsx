@@ -10,6 +10,7 @@ import Article from "./pages/Article";
 import Trending from "./pages/Trending";
 import PersonalizedFeed from "./pages/PersonalizedFeed";
 import NotFound from "./pages/NotFound";
+import "./lib/env"; // Import for environment validation
 
 const queryClient = new QueryClient();
 
