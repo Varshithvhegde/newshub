@@ -1,0 +1,32 @@
+{
+  "name": "newshub-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "node index.js",
+    "cache:stats": "node src/scripts/clearCache.js --stats",
+    "cache:clear": "node src/scripts/clearCache.js --clear",
+    "cache:force": "node src/scripts/clearCache.js --force",
+    "cache:nuclear": "node src/scripts/clearCache.js --nuclear",
+    "cache:complete-stats": "node src/scripts/clearCache.js --complete-stats",
+    "cache:help": "node src/scripts/clearCache.js --help"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@google/genai": "^1.11.0",
+    "@redis/json": "^5.6.1",
+    "@redis/search": "^5.6.1",
+    "axios": "^1.11.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "node-cron": "^4.2.1",
+    "nodemon": "^3.1.10",
+    "redis": "^5.6.1"
+  }
+}
