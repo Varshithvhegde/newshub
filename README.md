@@ -103,21 +103,67 @@ newshub/
 │   ├── cache_clear_metrics_1754132194592.json
 │   └── README.md
 ├── frontend/               # React frontend (NewsHub Web App)
+│   ├── src/
+│   │   ├── components/     # UI components
+│   │   │   ├── ui/         # Shadcn/ui components
+│   │   │   ├── ArticleCard.tsx
+│   │   │   ├── Header.tsx
+│   │   │   ├── LoadingSpinner.tsx
+│   │   │   ├── PersonalizedSearchFilters.tsx
+│   │   │   ├── PreferenceSetup.tsx
+│   │   │   ├── SearchFilters.tsx
+│   │   │   └── SentimentBadge.tsx
+│   │   ├── pages/          # Page components
+│   │   │   ├── Article.tsx
+│   │   │   ├── Home.tsx
+│   │   │   ├── Index.tsx
+│   │   │   ├── NotFound.tsx
+│   │   │   ├── PersonalizedFeed.tsx
+│   │   │   ├── Search.tsx
+│   │   │   └── Trending.tsx
+│   │   ├── hooks/          # Custom React hooks
+│   │   │   ├── useDebounce.ts
+│   │   │   ├── use-mobile.tsx
+│   │   │   └── use-toast.ts
+│   │   ├── lib/            # Utility libraries
+│   │   │   ├── api.ts
+│   │   │   ├── config.ts
+│   │   │   ├── env.ts
+│   │   │   ├── userManager.ts
+│   │   │   └── utils.ts
+│   │   ├── App.tsx         # Main React component
+│   │   ├── main.tsx        # Application entry point
+│   │   ├── index.css       # Global styles
+│   │   └── App.css         # App-specific styles
+│   ├── public/             # Static assets
+│   │   ├── favicon.ico
+│   │   ├── placeholder.svg
+│   │   └── robots.txt
 │   ├── .gitignore
-│   ├── env.example         # Environment variables template
-│   ├── index.html          # HTML template
 │   ├── bun.lockb           # Bun lock file
 │   ├── components.json     # Shadcn/ui configuration
+│   ├── env.example         # Environment variables template
 │   ├── eslint.config.js    # ESLint configuration
-│   └── node_modules/       # Dependencies
+│   ├── index.html          # HTML template
+│   ├── package.json        # Dependencies and scripts
+│   ├── package-lock.json
+│   ├── postcss.config.js   # PostCSS configuration
+│   ├── tailwind.config.ts  # Tailwind configuration
+│   ├── tsconfig.json       # TypeScript configuration
+│   ├── tsconfig.app.json
+│   ├── tsconfig.node.json
+│   ├── vercel.json         # Vercel deployment config
+│   ├── vite.config.ts      # Vite configuration
+│   └── vite.config.ts.timestamp-1753710958480-1ca4a5f8d9d6c.mjs
 └── README.md               # This file
 ```
 
-**Note**: The frontend directory is currently in a minimal state with configuration files. The main application structure is expected to include:
-- `src/` directory with React components
-- `public/` directory for static assets
-- `package.json` for dependencies
-- Build configuration files
+**Note**: The frontend is now fully developed with a complete React TypeScript application including:
+- Comprehensive UI components with Shadcn/ui
+- Multiple pages for different features (Home, Search, Trending, Personalized Feed, etc.)
+- Custom hooks for functionality like debouncing and mobile detection
+- API integration and user management
+- Responsive design with Tailwind CSS
 
 ## 📦 Installation
 
@@ -132,7 +178,7 @@ newshub/
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd news_summarise
+   cd newshub
    ```
 
 2. **Backend Setup**
@@ -390,6 +436,7 @@ npm run build
 ## 📚 Documentation
 
 - [Backend Documentation](backend/README.md)
+- [Frontend Documentation](frontend/README.md)
 - [Cache Management Guide](backend/docs/CACHE_MANAGEMENT.md)
 - [Cache Clearing Guide](backend/docs/CACHE_CLEARING.md)
 - [API Documentation](backend/docs/README.md)
