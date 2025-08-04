@@ -56,38 +56,68 @@ A modern, full-stack news aggregation and summarization platform built with Reac
 ## 📁 Project Structure
 
 ```
-news_summarise/
+newshub/
 ├── backend/                 # Node.js backend (NewsHub API)
 │   ├── src/
 │   │   ├── controllers/    # Request handlers
+│   │   │   └── newsController.js
 │   │   ├── routes/         # API route definitions
+│   │   │   ├── adminRoutes.js
+│   │   │   ├── healthRoutes.js
+│   │   │   ├── metadataRoutes.js
+│   │   │   ├── newsRoutes.js
+│   │   │   └── userRoutes.js
 │   │   ├── services/       # Business logic
+│   │   │   ├── cacheClearService.js
+│   │   │   ├── geminiService.js
+│   │   │   ├── newsFetcherService.js
+│   │   │   ├── newsProcessor.js
+│   │   │   └── redisService.js
 │   │   ├── middleware/     # Express middleware
+│   │   │   ├── errorHandler.js
+│   │   │   └── logger.js
 │   │   ├── utils/          # Utility functions
+│   │   │   └── pagination.js
 │   │   ├── config/         # Configuration
+│   │   │   └── database.js
 │   │   ├── scripts/        # Management scripts
+│   │   │   ├── clearAllCache.js
+│   │   │   ├── clearCache.js
+│   │   │   ├── clearCacheExceptUser.js
+│   │   │   ├── clearNews.js
+│   │   │   └── deleteSearchIndex.js
 │   │   └── app.js          # Express application
+│   ├── scripts/            # Root-level scripts
+│   │   └── run-news-processor.js
 │   ├── docs/               # Documentation
+│   │   ├── CACHE_CLEARING.md
+│   │   ├── CACHE_MANAGEMENT.md
+│   │   └── README.md
 │   ├── logs/               # Application logs
 │   ├── index.js            # Entry point
+│   ├── addNews.js          # News addition utility
+│   ├── test-cors.js        # CORS testing utility
 │   ├── package.json
+│   ├── package-lock.json
 │   ├── vercel.json         # Vercel deployment config
-│   └── .env                # Environment variables
-├── summarizely-ai/         # React frontend (NewsHub Web App)
-│   ├── src/
-│   │   ├── components/     # UI components
-│   │   ├── pages/          # Page components
-│   │   ├── hooks/          # Custom React hooks
-│   │   ├── lib/            # Utility libraries
-│   │   ├── App.tsx         # Main React component
-│   │   └── main.tsx        # Application entry point
-│   ├── public/             # Static assets
-│   ├── package.json
-│   ├── vite.config.ts      # Vite configuration
-│   ├── tailwind.config.ts  # Tailwind configuration
-│   └── index.html          # HTML template
+│   ├── cache_clear_metrics_1754132194592.json
+│   └── README.md
+├── frontend/               # React frontend (NewsHub Web App)
+│   ├── .gitignore
+│   ├── env.example         # Environment variables template
+│   ├── index.html          # HTML template
+│   ├── bun.lockb           # Bun lock file
+│   ├── components.json     # Shadcn/ui configuration
+│   ├── eslint.config.js    # ESLint configuration
+│   └── node_modules/       # Dependencies
 └── README.md               # This file
 ```
+
+**Note**: The frontend directory is currently in a minimal state with configuration files. The main application structure is expected to include:
+- `src/` directory with React components
+- `public/` directory for static assets
+- `package.json` for dependencies
+- Build configuration files
 
 ## 📦 Installation
 
@@ -123,7 +153,7 @@ news_summarise/
 
 3. **Frontend Setup**
    ```bash
-   cd ../summarizely-ai
+   cd ../frontend
    npm install
    
    # Create environment file (optional - will use fallback if not created)
@@ -360,8 +390,8 @@ npm run build
 ## 📚 Documentation
 
 - [Backend Documentation](backend/README.md)
-- [Frontend Documentation](summarizely-ai/README.md)
 - [Cache Management Guide](backend/docs/CACHE_MANAGEMENT.md)
+- [Cache Clearing Guide](backend/docs/CACHE_CLEARING.md)
 - [API Documentation](backend/docs/README.md)
 
 ## 👨‍💻 Author
