@@ -1,0 +1,193 @@
+{
+  "totalKeysCleared": 115,
+  "cacheTypes": {
+    "Article Data": {
+      "keysCleared": 71,
+      "description": "Individual article data",
+      "pattern": "news:*",
+      "timeMs": 499
+    },
+    "All Articles Cache": {
+      "keysCleared": 7,
+      "description": "Cached all articles results",
+      "pattern": "all_articles:*",
+      "timeMs": 490
+    },
+    "Search Cache": {
+      "keysCleared": 0,
+      "description": "Search query results",
+      "pattern": "search:*",
+      "timeMs": 244
+    },
+    "Topic Search Cache": {
+      "keysCleared": 0,
+      "description": "Topic-based search results",
+      "pattern": "topic_search:*",
+      "timeMs": 244
+    },
+    "Sentiment Search Cache": {
+      "keysCleared": 0,
+      "description": "Sentiment-based search results",
+      "pattern": "sentiment_search:*",
+      "timeMs": 245
+    },
+    "Similar Articles Cache": {
+      "keysCleared": 5,
+      "description": "Similar articles results",
+      "pattern": "similar:*",
+      "timeMs": 486
+    },
+    "Similar Articles Metadata": {
+      "keysCleared": 5,
+      "description": "Similar articles metadata",
+      "pattern": "similar_meta:*",
+      "timeMs": 485
+    },
+    "Similar Articles Stats": {
+      "keysCleared": 5,
+      "description": "Similar articles statistics",
+      "pattern": "similar_stats:*",
+      "timeMs": 487
+    },
+    "Similar Articles Bloom Filters": {
+      "keysCleared": 5,
+      "description": "Bloom filters for similar articles",
+      "pattern": "similar_bloom:*",
+      "timeMs": 486
+    },
+    "Similar Articles LRU": {
+      "keysCleared": 1,
+      "description": "LRU management for similar articles",
+      "pattern": "similar_cache_lru",
+      "timeMs": 485
+    },
+    "Personalized News Cache": {
+      "keysCleared": 0,
+      "description": "Personalized news results",
+      "pattern": "personalized:*",
+      "timeMs": 244
+    },
+    "Simple Personalized Cache": {
+      "keysCleared": 5,
+      "description": "Simple personalized news cache",
+      "pattern": "personalized_simple:*",
+      "timeMs": 485
+    },
+    "Personalized Search Cache": {
+      "keysCleared": 0,
+      "description": "Personalized search results",
+      "pattern": "personalized_search:*",
+      "timeMs": 243
+    },
+    "Simple Personalized Search Cache": {
+      "keysCleared": 1,
+      "description": "Simple personalized search cache",
+      "pattern": "personalized_search_simple:*",
+      "timeMs": 485
+    },
+    "Personalized Metadata": {
+      "keysCleared": 0,
+      "description": "Personalized news metadata",
+      "pattern": "personalized_meta:*",
+      "timeMs": 244
+    },
+    "Personalized Stats": {
+      "keysCleared": 0,
+      "description": "Personalized news statistics",
+      "pattern": "personalized_stats:*",
+      "timeMs": 244
+    },
+    "Personalized LRU": {
+      "keysCleared": 0,
+      "description": "LRU management for personalized news",
+      "pattern": "personalized_cache_lru",
+      "timeMs": 245
+    },
+    "User Preferences": {
+      "keysCleared": 2,
+      "description": "User preference data",
+      "pattern": "user:*:preferences",
+      "timeMs": 488
+    },
+    "User Read Articles": {
+      "keysCleared": 5,
+      "description": "User read article tracking",
+      "pattern": "user:*:read:*",
+      "timeMs": 486
+    },
+    "User Read Sets": {
+      "keysCleared": 1,
+      "description": "User read article sets",
+      "pattern": "user:*:read_set",
+      "timeMs": 485
+    },
+    "Preferences Version": {
+      "keysCleared": 1,
+      "description": "Preferences version tracking",
+      "pattern": "prefs_version:*",
+      "timeMs": 485
+    },
+    "Simple Preferences Version": {
+      "keysCleared": 1,
+      "description": "Simple preferences version tracking",
+      "pattern": "prefs_version_simple:*",
+      "timeMs": 486
+    },
+    "Fallback Cache": {
+      "keysCleared": 0,
+      "description": "Fallback cache data",
+      "pattern": "fallback:*",
+      "timeMs": 242
+    },
+    "Personalized Fallback": {
+      "keysCleared": 0,
+      "description": "Personalized fallback cache",
+      "pattern": "personalized_fallback:*",
+      "timeMs": 243
+    },
+    "Temporary Cache": {
+      "keysCleared": 0,
+      "description": "Temporary cache data",
+      "pattern": "temp:*",
+      "timeMs": 242
+    },
+    "Cache Statistics": {
+      "keysCleared": 0,
+      "description": "Cache performance statistics",
+      "pattern": "cache_stats:*",
+      "timeMs": 242
+    },
+    "Vector Cache": {
+      "keysCleared": 0,
+      "description": "Vector embedding cache",
+      "pattern": "vector:*",
+      "timeMs": 243
+    },
+    "Embedding Cache": {
+      "keysCleared": 0,
+      "description": "Embedding data cache",
+      "pattern": "embedding:*",
+      "timeMs": 243
+    },
+    "Search Index": {
+      "keysCleared": 1,
+      "description": "RedisSearch index",
+      "pattern": "idx:news",
+      "timeMs": 0
+    },
+    "Search Metadata": {
+      "keysCleared": 0,
+      "description": "Search metadata cache",
+      "pattern": "search_meta:*",
+      "timeMs": 243
+    }
+  },
+  "errors": [],
+  "performance": {
+    "totalTimeMs": 11456,
+    "memoryFreedBytes": 18145568,
+    "memoryFreedFormatted": "17.3 MB",
+    "keysFreed": null,
+    "averageTimePerKey": 99.61739130434782
+  }
+}
