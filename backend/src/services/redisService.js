@@ -6,7 +6,15 @@ redis.connect();
 
 async function storeArticle(article) {
   const key = `news:${article.id}`;
-  await redis.json.set(key, '$', article);
+  
+  // Add created_at timestamp if not already present
+  const articleWithTimestamp = {
+    ...article,
+    created_at: article.created_at || new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  };
+  
+  await redis.json.set(key, '$', articleWithTimestamp);
 }
 
 async function articleExists(id) {
@@ -70,6 +78,7 @@ async function createSearchIndex() {
       '$.keywords': { type: 'TAG', AS: 'keywords' },
       '$.source.name': { type: 'TAG', AS: 'source' },
       '$.publishedAt': { type: 'TEXT', AS: 'publishedAt' },
+      '$.created_at': { type: 'TEXT', AS: 'created_at' },
       '$.category': { type: 'TAG', AS: 'category' },
       '$.id': { type: 'TAG', AS: 'article_id' },
       '$.urlToImage': { type: 'TEXT', AS: 'urlToImage' },
@@ -2425,5 +2434,9 @@ module.exports = {
   trackArticleMetrics,
   getArticleMetrics,
   getUserArticleHistory,
-  getTrendingArticles
+  getTrendingArticles,
+  // Add cache clearing functions
+  clearAllCacheExceptUser: require('./cacheClearService').clearAllCacheExceptUser,
+  clearSpecificCacheTypes: require('./cacheClearService').clearSpecificCacheTypes,
+  getCacheStatistics: require('./cacheClearService').getCacheStatistics
 };

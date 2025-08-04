@@ -25,7 +25,11 @@ const {
   getUserArticleHistory,
   getTrendingArticles,
   // Add article metrics tracking
-  trackArticleMetrics
+  trackArticleMetrics,
+  // Add cache clearing functions
+  clearAllCacheExceptUser,
+  clearSpecificCacheTypes,
+  getCacheStatistics
 } = require('../services/redisService');
 const { getPaginationParams, createPaginatedResponse } = require('../utils/pagination');
 
@@ -469,6 +473,61 @@ async function healthCheck(req, res) {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 }
 
+// Clear all cache except user data
+async function clearAllCacheExceptUserHandler(req, res) {
+  try {
+    console.log('Admin request to clear all cache except user data');
+    const result = await clearAllCacheExceptUser();
+    
+    res.json({
+      message: 'Cache cleared successfully',
+      result,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Error clearing cache:', error);
+    res.status(500).json({ error: 'Failed to clear cache' });
+  }
+}
+
+// Clear specific cache types
+async function clearSpecificCacheTypesHandler(req, res) {
+  try {
+    const { types } = req.query;
+    const cacheTypes = types ? types.split(',').map(type => type.trim()) : [];
+    
+    console.log(`Admin request to clear specific cache types: ${cacheTypes.join(', ')}`);
+    const result = await clearSpecificCacheTypes(cacheTypes);
+    
+    res.json({
+      message: 'Specific cache types cleared successfully',
+      cacheTypes,
+      result,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Error clearing specific cache types:', error);
+    res.status(500).json({ error: 'Failed to clear specific cache types' });
+  }
+}
+
+// Get cache statistics
+async function getCacheStatisticsHandler(req, res) {
+  try {
+    console.log('Admin request to get cache statistics');
+    const stats = await getCacheStatistics();
+    
+    res.json({
+      message: 'Cache statistics retrieved successfully',
+      stats,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Error getting cache statistics:', error);
+    res.status(500).json({ error: 'Failed to get cache statistics' });
+  }
+}
+
 module.exports = {
   getNewsByTopic,
   getNewsBySentiment,
@@ -490,5 +549,9 @@ module.exports = {
   getArticleMetrics: getArticleMetricsHandler,
   getUserArticleHistory: getUserArticleHistoryHandler,
   getTrendingArticles: getTrendingArticlesHandler,
-  healthCheck
+  healthCheck,
+  // Add cache clearing functions
+  clearAllCacheExceptUser: clearAllCacheExceptUserHandler,
+  clearSpecificCacheTypes: clearSpecificCacheTypesHandler,
+  getCacheStatistics: getCacheStatisticsHandler
 };
