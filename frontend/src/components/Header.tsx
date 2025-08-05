@@ -64,8 +64,8 @@ export const Header = () => {
           )}
         </Button>
 
-        {/* Right side - could add user menu, notifications, etc. */}
-        <div className="hidden md:flex items-center space-x-3">
+        {/* Right side - Date and Redis tag */}
+        <div className="hidden md:flex items-center space-x-4">
           <span className="text-sm text-gray-500">
             {new Date().toLocaleDateString('en-US', { 
               weekday: 'short', 
@@ -73,6 +73,10 @@ export const Header = () => {
               day: 'numeric' 
             })}
           </span>
+          <div className="flex items-center space-x-2 px-3 py-1 bg-red-50 rounded-full">
+            <img src="/redis.svg" alt="Redis" className="w-4 h-4" />
+            <span className="text-xs font-medium text-red-700">Powered by Redis</span>
+          </div>
         </div>
       </div>
 
@@ -103,6 +107,12 @@ export const Header = () => {
                   month: 'long', 
                   day: 'numeric' 
                 })}
+              </div>
+              <div className="px-3 py-1">
+                <div className="flex items-center space-x-2 px-3 py-1 bg-red-50 rounded-full inline-flex">
+                  <img src="/redis.svg" alt="Redis" className="w-4 h-4" />
+                  <span className="text-xs font-medium text-red-700">Powered by Redis</span>
+                </div>
               </div>
             </div>
           </nav>
