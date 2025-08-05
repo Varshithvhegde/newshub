@@ -1,0 +1,123 @@
+name: News Processor - Automated News Fetching
+
+on:
+  schedule:
+    # Run every 4 hours
+    - cron: '0 */4 * * *'
+  workflow_dispatch:
+    # Allow manual triggering
+    inputs:
+      force_run:
+        description: 'Force run even if already running'
+        required: false
+        default: 'false'
+        type: boolean
+
+jobs:
+  fetch-and-process-news:
+    name: Fetch and Process News Articles
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: backend/package-lock.json
+          
+      - name: Install dependencies
+        run: |
+          cd backend
+          npm ci
+          
+      - name: Setup environment variables
+        run: |
+          cd backend
+          echo "REDIS_URL=${{ secrets.REDIS_URL }}" >> .env
+          echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> .env
+          echo "NEWSAPI_KEY=${{ secrets.NEWSAPI_KEY }}" >> .env
+          echo "PORT=3001" >> .env
+          echo "NODE_ENV=production" >> .env
+          
+      - name: Run news processor
+        run: |
+          cd backend
+          node addNews.js
+        env:
+          REDIS_URL: ${{ secrets.REDIS_URL }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          NEWSAPI_KEY: ${{ secrets.NEWSAPI_KEY }}
+          NODE_ENV: production
+          
+      - name: Log completion
+        run: |
+          echo "✅ News processing completed at $(date)"
+          echo "📰 Articles fetched and processed successfully"
+          
+  # Optional: Add a job to monitor the process
+  monitor-process:
+    name: Monitor News Processing
+    runs-on: ubuntu-latest
+    needs: fetch-and-process-news
+    if: always()
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: backend/package-lock.json
+          
+      - name: Install dependencies
+        run: |
+          cd backend
+          npm ci
+          
+      - name: Check Redis connection and stats
+        run: |
+          cd backend
+          echo "🔍 Checking Redis connection and cache statistics..."
+          node -e "
+            const { createClient } = require('redis');
+            const client = createClient({ url: process.env.REDIS_URL });
+            
+            async function checkRedis() {
+              try {
+                await client.connect();
+                const info = await client.info('memory');
+                const keys = await client.dbsize();
+                console.log('✅ Redis connection successful');
+                console.log('📊 Total keys in Redis:', keys);
+                console.log('💾 Memory usage:', info.split('\\n').find(line => line.startsWith('used_memory_human')));
+                await client.disconnect();
+              } catch (error) {
+                console.error('❌ Redis connection failed:', error.message);
+                process.exit(1);
+              }
+            }
+            
+            checkRedis();
+          "
+        env:
+          REDIS_URL: ${{ secrets.REDIS_URL }}
+          
+      - name: Generate processing report
+        run: |
+          echo "📋 News Processing Report" >> $GITHUB_STEP_SUMMARY
+          echo "=========================" >> $GITHUB_STEP_SUMMARY
+          echo "- **Job Status**: ${{ needs.fetch-and-process-news.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Run Time**: $(date)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Trigger**: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ needs.fetch-and-process-news.result }}" == "success" ]; then
+            echo "- **Status**: ✅ Success" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- **Status**: ❌ Failed" >> $GITHUB_STEP_SUMMARY
+          fi 
