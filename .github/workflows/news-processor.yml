@@ -17,6 +17,7 @@ jobs:
   fetch-and-process-news:
     name: Fetch and Process News Articles
     runs-on: ubuntu-latest
+    environment: NEWSAPI_KEY
     
     steps:
       - name: Checkout repository
@@ -43,6 +44,44 @@ jobs:
           echo "PORT=3001" >> .env
           echo "NODE_ENV=production" >> .env
           
+      - name: Debug environment variables
+        run: |
+          echo "🔍 Debugging environment variables..."
+          echo "REDIS_URL exists: ${{ secrets.REDIS_URL != '' }}"
+          echo "GEMINI_API_KEY exists: ${{ secrets.GEMINI_API_KEY != '' }}"
+          echo "NEWSAPI_KEY exists: ${{ secrets.NEWSAPI_KEY != '' }}"
+          echo "Environment: ${{ github.ref_name }}"
+          
+      - name: Test Redis connection
+        run: |
+          cd backend
+          echo "🔍 Testing Redis connection..."
+          node -e "
+            const { createClient } = require('redis');
+            const client = createClient({ url: process.env.REDIS_URL });
+            
+            async function testRedis() {
+              try {
+                console.log('🔗 Attempting to connect to Redis...');
+                console.log('📍 Redis URL:', process.env.REDIS_URL ? 'Set' : 'Not set');
+                await client.connect();
+                console.log('✅ Redis connection successful!');
+                const info = await client.info('server');
+                console.log('📊 Redis server info:', info.split('\\n')[0]);
+                await client.disconnect();
+                console.log('🔌 Redis connection closed');
+              } catch (error) {
+                console.error('❌ Redis connection failed:', error.message);
+                console.error('🔍 Error details:', error);
+                process.exit(1);
+              }
+            }
+            
+            testRedis();
+          "
+        env:
+          REDIS_URL: ${{ secrets.REDIS_URL }}
+          
       - name: Run news processor
         run: |
           cd backend
@@ -64,6 +103,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: fetch-and-process-news
     if: always()
+    environment: NEWSAPI_KEY
     
     steps:
       - name: Checkout repository

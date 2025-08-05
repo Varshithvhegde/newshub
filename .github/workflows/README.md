@@ -16,12 +16,13 @@ The `news-processor.yml` workflow automatically fetches and processes news artic
 
 ### Setup Instructions
 
-#### 1. Configure GitHub Secrets
+#### 1. Configure GitHub Environment Secrets
 
 Add the following secrets in your GitHub repository:
 
-1. Go to your repository → Settings → Secrets and variables → Actions
-2. Add the following repository secrets:
+1. Go to your repository → Settings → Environments
+2. Create a new environment called `NEWSAPI_KEY`
+3. Add the following environment secrets:
 
 ```
 REDIS_URL=redis://your-redis-instance:6379
@@ -29,13 +30,15 @@ GEMINI_API_KEY=your_gemini_api_key_here
 NEWSAPI_KEY=your_newsapi_key_here
 ```
 
-#### 2. Required Secrets
+#### 2. Required Environment Secrets
 
 | Secret Name | Description | Example |
 |-------------|-------------|---------|
 | `REDIS_URL` | Redis connection URL | `redis://localhost:6379` |
 | `GEMINI_API_KEY` | Google Gemini AI API key | `AIzaSyC...` |
 | `NEWSAPI_KEY` | NewsAPI.org API key | `1234567890abcdef...` |
+
+**Note**: These secrets must be added to the `NEWSAPI_KEY` environment, not as repository secrets.
 
 #### 3. Workflow Schedule
 
