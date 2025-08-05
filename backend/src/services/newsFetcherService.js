@@ -11,6 +11,7 @@ async function fetchNews(query = 'india', pageSize = 5) {
     pageSize,
     sortBy: 'publishedAt',
     language: 'en',
+    sortBy: 'publishedAt'
   };
   const response = await axios.get(NEWSAPI_URL, { params });
   return response.data.articles;

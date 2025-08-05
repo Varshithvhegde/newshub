@@ -66,8 +66,26 @@ jobs:
                 console.log('📍 Redis URL:', process.env.REDIS_URL ? 'Set' : 'Not set');
                 await client.connect();
                 console.log('✅ Redis connection successful!');
+                
+                // Test basic operations
+                await client.set('test:workflow', 'connected');
+                const testValue = await client.get('test:workflow');
+                console.log('✅ Basic Redis operations working');
+                
+                // Get server info
                 const info = await client.info('server');
                 console.log('📊 Redis server info:', info.split('\\n')[0]);
+                
+                // Get database size (using SCAN instead of dbsize)
+                let keyCount = 0;
+                for await (const key of client.scanIterator()) {
+                  keyCount++;
+                  if (keyCount > 100) break; // Limit scan for performance
+                }
+                console.log('📊 Approximate keys in Redis:', keyCount);
+                
+                // Clean up test key
+                await client.del('test:workflow');
                 await client.disconnect();
                 console.log('🔌 Redis connection closed');
               } catch (error) {
@@ -132,14 +150,29 @@ jobs:
             async function checkRedis() {
               try {
                 await client.connect();
-                const info = await client.info('memory');
-                const keys = await client.dbsize();
                 console.log('✅ Redis connection successful');
-                console.log('📊 Total keys in Redis:', keys);
-                console.log('💾 Memory usage:', info.split('\\n').find(line => line.startsWith('used_memory_human')));
+                
+                // Get memory info
+                const info = await client.info('memory');
+                const memoryLine = info.split('\\n').find(line => line.startsWith('used_memory_human'));
+                console.log('💾 Memory usage:', memoryLine);
+                
+                // Count keys using SCAN
+                let keyCount = 0;
+                for await (const key of client.scanIterator()) {
+                  keyCount++;
+                  if (keyCount > 1000) break; // Limit scan for performance
+                }
+                console.log('📊 Approximate total keys in Redis:', keyCount);
+                
+                // Get server info
+                const serverInfo = await client.info('server');
+                console.log('📊 Redis server info:', serverInfo.split('\\n')[0]);
+                
                 await client.disconnect();
               } catch (error) {
                 console.error('❌ Redis connection failed:', error.message);
+                console.error('🔍 Error details:', error);
                 process.exit(1);
               }
             }
