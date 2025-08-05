@@ -49,6 +49,8 @@ async function clearAllCacheExceptUser() {
       { pattern: 'article_last_viewed:*', name: 'Article Last Viewed', description: 'Last viewed timestamps for articles' },
       { pattern: 'article_unique_views:*', name: 'Article Unique Views', description: 'Unique view tracking for articles' },
       { pattern: 'article_views:*', name: 'Article Views', description: 'Total view counts for articles' },
+      { pattern: 'article_user_views:*', name: 'Article User Views', description: 'User-specific article view tracking' },
+      { pattern: 'user_article_views:*', name: 'User Article Views', description: 'User article view history' },
       
       // Search-related caches
       { pattern: 'search:*', name: 'Search Cache', description: 'Search query results' },
@@ -93,7 +95,8 @@ async function clearAllCacheExceptUser() {
       { pattern: 'search_meta:*', name: 'Search Metadata', description: 'Search metadata cache' }
     ];
 
-    // Define user data patterns to PRESERVE (from image: user, user_article_views)
+    // Define user data patterns to PRESERVE (from image: user)
+    // Note: article_user_views and user_article_views are NOT preserved as they are view tracking data
     const userDataPatterns = [
       'user:*'
     ];
@@ -230,7 +233,9 @@ async function clearSpecificCacheTypes(cacheTypes = [], preserveUserData = true)
         { pattern: 'article_engagement:*', name: 'Article Engagement' },
         { pattern: 'article_last_viewed:*', name: 'Article Last Viewed' },
         { pattern: 'article_unique_views:*', name: 'Article Unique Views' },
-        { pattern: 'article_views:*', name: 'Article Views' }
+        { pattern: 'article_views:*', name: 'Article Views' },
+        { pattern: 'article_user_views:*', name: 'Article User Views' },
+        { pattern: 'user_article_views:*', name: 'User Article Views' }
       ],
       'search': [
         { pattern: 'search:*', name: 'Search Cache' },
@@ -286,7 +291,7 @@ async function clearSpecificCacheTypes(cacheTypes = [], preserveUserData = true)
 
     // Count preserved user data if requested
     if (preserveUserData) {
-      const userDataPatterns = ['user:*', 'user_article_views:*'];
+      const userDataPatterns = ['user:*'];
       for (const userPattern of userDataPatterns) {
         const userKeys = await redis.keys(userPattern);
         metrics.preservedUserData += userKeys.length;
@@ -390,6 +395,7 @@ async function getCacheStatistics() {
       { pattern: 'article_last_viewed:*', name: 'Article Last Viewed' },
       { pattern: 'article_unique_views:*', name: 'Article Unique Views' },
       { pattern: 'article_views:*', name: 'Article Views' },
+      { pattern: 'article_user_views:*', name: 'Article User Views' },
       { pattern: 'search:*', name: 'Search Cache' },
       { pattern: 'similar:*', name: 'Similar Articles Cache' },
       { pattern: 'personalized:*', name: 'Personalized News Cache' },

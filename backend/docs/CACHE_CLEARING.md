@@ -22,7 +22,6 @@ The cache clearing system is designed to clear all cache and data except for use
 
 ### Data Types Preserved
 - `user` - User data and preferences
-- `user_article_views` - User article viewing history
 
 ## Usage
 
