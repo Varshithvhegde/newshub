@@ -30,7 +30,6 @@
     "node-cron": "^4.2.1",
     "nodemon": "^3.1.10",
     "redis": "^5.6.1",
-    "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.1"
+    "swagger-jsdoc": "^6.2.8"
   }
 }
