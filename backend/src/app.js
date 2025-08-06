@@ -1,6 +1,8 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const swaggerUi = require('swagger-ui-express');
+const specs = require('./config/swagger');
 const { createSearchIndex } = require('./services/redisService');
 const newsRoutes = require('./routes/newsRoutes');
 const metadataRoutes = require('./routes/metadataRoutes');
@@ -32,6 +34,19 @@ app.options('*', cors(corsOptions));
 
 // Initialize search index on startup
 createSearchIndex();
+
+// Swagger Documentation
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, {
+  customCss: '.swagger-ui .topbar { display: none }',
+  customSiteTitle: 'NewsHub API Documentation',
+  customfavIcon: '/favicon.ico',
+  swaggerOptions: {
+    persistAuthorization: true,
+    displayRequestDuration: true,
+    filter: true,
+    showExtensions: true
+  }
+}));
 
 // Routes
 app.use('/api/news', newsRoutes);
