@@ -74,7 +74,7 @@ export const Header = () => {
             })}
           </span>
           <div className="flex items-center space-x-2 px-3 py-1 bg-red-50 rounded-full">
-            <img src="/redis.svg" alt="Redis" className="w-4 h-4" />
+            <img src="/redis_logo.png" alt="Redis" className="w-6 h-6" />
             <span className="text-xs font-medium text-red-700">Powered by Redis</span>
           </div>
         </div>
@@ -110,7 +110,7 @@ export const Header = () => {
               </div>
               <div className="px-3 py-1">
                 <div className="flex items-center space-x-2 px-3 py-1 bg-red-50 rounded-full inline-flex">
-                  <img src="/redis.svg" alt="Redis" className="w-4 h-4" />
+                  <img src="/redis_logo.png" alt="Redis" className="w-6 h-6" />
                   <span className="text-xs font-medium text-red-700">Powered by Redis</span>
                 </div>
               </div>
