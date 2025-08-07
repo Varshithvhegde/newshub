@@ -1,4 +1,5 @@
 # NewsHub - AI-Powered News Aggregation Platform
+<img width="1000" height="420" alt="NewsHub - AI-Powered News Aggregation Platform" src="https://github.com/user-attachments/assets/77ef82aa-ddfa-4376-a681-fe9623ff1782" />
 
 A modern, full-stack news aggregation and summarization platform built with React, TypeScript, Node.js, and Redis. NewsHub provides users with AI-powered news summaries, personalized feeds, and advanced search capabilities using Google Gemini AI and Redis vector search.
 
